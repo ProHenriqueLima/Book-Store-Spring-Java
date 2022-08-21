@@ -19,7 +19,7 @@ public class PublisherModel implements Serializable {
     public String namePublish;
 
     @NotBlank(message = "Campo não informado!")
-    @Column(nullable = false, unique = true, length = 64)
+    @Column(nullable = false, length = 64)
     public String cityPublish;
 
     public Long getId() {

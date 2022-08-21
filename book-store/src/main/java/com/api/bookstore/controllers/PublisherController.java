@@ -26,7 +26,7 @@ public class PublisherController {
     public ResponseEntity<Object> savePublisher(@RequestBody @Valid PublisherDto publisherDto){
         var publisherModel = new PublisherModel();
         BeanUtils.copyProperties(publisherDto , publisherModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(publisherService.save(publisherModel));
+        return publisherService.save(publisherModel);
 
     }
 

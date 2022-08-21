@@ -8,16 +8,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
+import java.awt.print.Book;
 
 @Repository
-public interface BookRepository extends JpaRepository<BookModel, Long>
-{
-   @Query(value = "SELECT u FROM BookModel u WHERE u.name = :name")
-   BookModel verifyExistedBook(@Param("name") String name);
+public interface RentRepository extends JpaRepository<RentModel, Long> {
+    @Query(value = "SELECT u FROM RentModel u WHERE book_id = :id")
+    RentModel verifyExistedRentBook(@Param("id") Long id);
 
-   @Query(value = "SELECT u FROM BookModel u WHERE publisher_id = :id")
-   List<BookModel> verifyExistedPublisherBook(@Param("id") Long id);
-
+    @Query(value = "SELECT u FROM RentModel u WHERE user_id = :id")
+    RentModel verifyExistedRentUser(@Param("id") Long id);
 }
