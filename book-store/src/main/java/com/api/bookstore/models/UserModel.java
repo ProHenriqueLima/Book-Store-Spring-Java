@@ -13,7 +13,7 @@ public class UserModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public UUID id;
+    public Long id;
 
     @NotBlank(message = "Campo não informado!")
     public String name;
@@ -29,11 +29,11 @@ public class UserModel implements Serializable {
     @NotBlank(message = "Campo não informado!")
     public String cityUser;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

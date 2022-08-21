@@ -25,9 +25,17 @@ public class UserService {
         return userRepository.save(userModel);
     }
 
+    @Transactional
+    public ResponseEntity<Object> update(Long id,UserModel userModel) {
+        Optional<UserModel> userModelTest = userRepository.findById(id);
+        if (!userModelTest.isPresent()){ return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não existente");}
+        userModel.setId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.save(userModel));
+    }
+
     public List<UserModel> getAll() { return userRepository.findAll();}
 
-    public ResponseEntity<Object> delete(UUID id) {
+    public ResponseEntity<Object> delete(Long id) {
         Optional<UserModel> userModel = userRepository.findById(id);
         if (!userModel.isPresent()){ return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not existed");}
         userRepository.delete(userModel.get());

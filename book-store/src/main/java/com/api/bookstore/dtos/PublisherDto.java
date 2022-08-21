@@ -1,7 +1,13 @@
 package com.api.bookstore.dtos;
 
+import com.api.bookstore.models.BookModel;
+
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 public class PublisherDto {
 
@@ -12,6 +18,9 @@ public class PublisherDto {
     @NotBlank
     @Size(max = 64)
     public String cityPublish;
+
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<BookModel> books;
 
     public String getNamePublish() {
         return namePublish;

@@ -1,6 +1,8 @@
 package com.api.bookstore.controllers;
 
+import com.api.bookstore.dtos.PublisherDto;
 import com.api.bookstore.dtos.UserDto;
+import com.api.bookstore.models.PublisherModel;
 import com.api.bookstore.models.UserModel;
 import com.api.bookstore.services.UserService;
 import org.springframework.beans.BeanUtils;
@@ -34,8 +36,15 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletedUser(@PathVariable(value = "id")UUID id){
+    public ResponseEntity<Object> deletedUser(@PathVariable(value = "id")Long id){
         return userService.delete(id);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id")Long id , @RequestBody @Valid UserDto userDto)
+    {
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userDto , userModel);
+        return userService.update(id,userModel);
+    }
 }

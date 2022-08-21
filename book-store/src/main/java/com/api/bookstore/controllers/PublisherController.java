@@ -3,6 +3,7 @@ package com.api.bookstore.controllers;
 import com.api.bookstore.dtos.PublisherDto;
 import com.api.bookstore.models.PublisherModel;
 import com.api.bookstore.services.PublisherService;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,8 +36,16 @@ public class PublisherController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleted(@PathVariable(value = "id")UUID id){
+    public ResponseEntity<Object> deleted(@PathVariable(value = "id")Long id){
         return publisherService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(@PathVariable(value = "id")Long id , @RequestBody @Valid PublisherDto publisherDto)
+    {
+        var publisherModel = new PublisherModel();
+        BeanUtils.copyProperties(publisherDto , publisherModel);
+        return publisherService.update(id,publisherModel);
     }
 
 }
