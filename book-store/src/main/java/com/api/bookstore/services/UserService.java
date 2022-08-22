@@ -1,9 +1,7 @@
 package com.api.bookstore.services;
 
-import com.api.bookstore.models.PublisherModel;
 import com.api.bookstore.models.RentModel;
 import com.api.bookstore.models.UserModel;
-import com.api.bookstore.repositories.PublisherRepository;
 import com.api.bookstore.repositories.RentRepository;
 import com.api.bookstore.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 public class UserService {
@@ -70,5 +68,7 @@ public class UserService {
         if (userModel == null){return true;}
         else {return false;}
     }
+
+
 
 }
