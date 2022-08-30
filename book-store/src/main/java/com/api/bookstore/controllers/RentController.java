@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping(value = "/api/rent")
@@ -28,10 +30,14 @@ public class RentController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> rentBook(@RequestBody @Valid RentDto rentDto){
+    public ResponseEntity<Object> rentBook(@RequestBody @Valid RentDto rentDto, HttpServletResponse response) throws IOException {
         var rentModel = new RentModel();
         BeanUtils.copyProperties(rentDto , rentModel);
-        return rentService.rentBook(rentModel,rentDto.getBookId(),rentDto.getUserId());
+        response.setContentType("application/pdf");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=RelatorioDoAluguel.pdf";
+        response.setHeader(headerKey,headerValue);
+        return rentService.rentBook(rentModel,rentDto.getBookId(),rentDto.getUserId(),response);
     }
 
     @PutMapping("/{id}")

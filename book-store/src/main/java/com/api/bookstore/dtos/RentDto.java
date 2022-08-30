@@ -12,7 +12,7 @@ public class RentDto {
     public Long userId;
 
     @NotNull
-    public LocalDate dateRent;
+    public LocalDate prediction;
 
     public Long getBookId() {
         return bookId;
@@ -30,11 +30,11 @@ public class RentDto {
         this.userId = userId;
     }
 
-    public LocalDate getDateRent() {
-        return dateRent;
+    public LocalDate getPrediction() {
+        return prediction;
     }
 
-    public void setDateRent(LocalDate dateRent) {
-        this.dateRent = dateRent;
+    public void setPrediction(LocalDate prediction) {
+        this.prediction = prediction;
     }
 }

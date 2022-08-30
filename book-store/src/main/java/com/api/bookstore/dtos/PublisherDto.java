@@ -16,7 +16,7 @@ public class PublisherDto {
     public String namePublish;
 
     @NotBlank
-    @Size(max = 64)
+    @Size(max = 100)
     public String cityPublish;
 
     @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -25,6 +25,9 @@ public class RentModel implements Serializable {
     @NotNull
     public LocalDate dateRent;
 
+    @NotNull
+    public LocalDate prediction;
+
     public Long getId() {
         return id;
     }
@@ -63,5 +66,13 @@ public class RentModel implements Serializable {
 
     public void setDateRent(LocalDate dateRent) {
         this.dateRent = dateRent;
+    }
+
+    public LocalDate getPrediction() {
+        return prediction;
+    }
+
+    public void setPrediction(LocalDate prediction) {
+        this.prediction = prediction;
     }
 }

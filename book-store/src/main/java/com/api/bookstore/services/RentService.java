@@ -4,15 +4,23 @@ import com.api.bookstore.models.BookModel;
 import com.api.bookstore.models.PublisherModel;
 import com.api.bookstore.models.RentModel;
 import com.api.bookstore.models.UserModel;
+import com.api.bookstore.models.pdf.RentPdf;
 import com.api.bookstore.repositories.BookRepository;
 import com.api.bookstore.repositories.RentRepository;
 import com.api.bookstore.repositories.UserRepository;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -32,10 +40,9 @@ public class RentService {
     public List<RentModel> getAll() { return rentRepository.findAll();}
 
     @Transactional
-    public ResponseEntity<Object> rentBook(RentModel rentModel, Long bookId, Long userId)
-    {
-        if ((rentModel.getDateRent()).isAfter(LocalDate.now())){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A data de aluguel não pode ser depois da data de hoje");
+    public ResponseEntity<Object> rentBook(RentModel rentModel, Long bookId, Long userId, HttpServletResponse response) throws IOException {
+        if ((rentModel.getPrediction()).isBefore(LocalDate.now())){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("A data de previsão não pode ser antes da data de hoje");
         }
 
         //Added User in Rent
@@ -60,6 +67,9 @@ public class RentService {
         rentModel.setBook(bookModel);
         bookModel.setAmount((bookModel.getAmount())+1);
         bookRepository.save(bookModel);
+        rentModel.setDateRent(LocalDate.now());
+
+        new RentPdf(userModel, bookModel, rentModel , response);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(rentRepository.save(rentModel));
     }
@@ -88,4 +98,6 @@ public class RentService {
         rentRepository.delete(rentModel.get());
         return ResponseEntity.status(HttpStatus.OK).body(rentModel.get());
     }
+
+
 }

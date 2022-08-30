@@ -47,12 +47,12 @@ public class BookService {
             Optional<PublisherModel> publisherModelFind = publisherRepository.findById(idPublisher);
 
             PublisherModel publisherModel = null;
+
             publisherModel = publisherModelFind.get();
 
             bookModel.setPublisher(publisherModel);
             bookRepository.save(bookModel);
             return ResponseEntity.status(HttpStatus.CREATED).body(bookModel);
-
 
     }
 
@@ -100,6 +100,7 @@ public class BookService {
         if (!verifyBookRent(id)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Esse livro não pode ser apagado pois existe alugueis vinculados à ele. ");
         }
+
         bookRepository.delete(bookModel.get());
         return ResponseEntity.status(HttpStatus.OK).body(bookModel.get());
     }

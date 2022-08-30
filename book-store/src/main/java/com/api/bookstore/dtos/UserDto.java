@@ -3,6 +3,7 @@ package com.api.bookstore.dtos;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class UserDto implements Serializable {
     public String andressUser;
 
     @NotBlank(message = "Campo não informado!")
+    @Size(max = 100)
     public String cityUser;
 
     public String getName() {
